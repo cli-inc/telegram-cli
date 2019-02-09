@@ -16,7 +16,8 @@
         {
             "label": "cmake",
             "type": "process",
-            "command": "cmake"
+            "command": "cmake",
+            "args": ["."]
         }
     ]
 }
