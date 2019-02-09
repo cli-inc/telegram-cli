@@ -20,3 +20,8 @@ add_executable(telegram-cli
 
 #target_link_libraries(telegram-cli PRIVATE Td::TdStatic)
 set_property(TARGET telegram-cli PROPERTY CXX_STANDARD 14)
+
+
+#install argument
+install(TARGETS telegram-cli
+        RUNTIME DESTINATION bin)
