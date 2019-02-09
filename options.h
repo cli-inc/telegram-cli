@@ -1,6 +1,8 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
+#include <vector>
+
 namespace options
 {
     /* value set by ‘--verbose’. */
@@ -34,6 +36,13 @@ namespace options
     /* value set by '--json' */
     static bool json;
     #endif
+
+    /* all non option arguments */
+    static std::vector<char*> argv;
+
+    /* counter of all non option arguments */
+    static int argc;
+
 } // options
 
 

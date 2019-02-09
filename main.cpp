@@ -8,13 +8,8 @@
 
 
 
-int
-main (int argc, char **argv)
-{
-  int c;
-
-  while (1)
-    {
+int main (int argc, char **argv) {
+  while (1) {
       static struct option long_options[] =
         {
           /* These options don’t set a flag.
@@ -39,12 +34,13 @@ main (int argc, char **argv)
       int option_index = 0;
 
       opterr = 0; // disable getopt error message
-      c = getopt_long (argc, argv, ":hACNvr:p:c:u:e:;",    // all short flags together
-                       long_options, &option_index);
+      int c = getopt_long (argc, argv, ":hACNvr:p:c:u:e:;",    // all short flags together
+                           long_options, &option_index);
 
       /* Detect the end of the options. */
-      if (c == -1)
+      if (c == -1) {
         break;
+      }
 
       switch (c)
         {
@@ -92,6 +88,7 @@ main (int argc, char **argv)
           break;
         case 'v':
           options::verbose = true;
+          puts("running in verbose mode");
           break;
 
         #ifdef USE_JSON
@@ -100,6 +97,7 @@ main (int argc, char **argv)
           break;
         #endif
 
+        // error handling sectin
         case '?': // invalid option
           printf("%s: invalid option -- '%c'\n", PACKAGE_NAME, optopt);
           help();
@@ -108,28 +106,29 @@ main (int argc, char **argv)
           printf("%s: missing argument -- '%c'\n", PACKAGE_NAME, optopt);
           help();
           break;
+
+        // should not happen at all
         default:
-          puts("arborting");
+          printf("%s: error in execution: unable to process char %c\n", PACKAGE_NAME);
+          printf("Please open a issue at: %s\n", PACKAGE_BUGREPORT);
           abort ();
         }
-    }
-  if (options::verbose)
-    puts ("verbose flag is set");
-  /* Print any remaining command line arguments (not options). */
-  if (optind < argc)
-    {
-      printf ("non-option ARGV-elements: ");
-      while (optind < argc)
-        printf ("%s ", argv[optind++]);
-      putchar ('\n');
-    }
+  }
 
+  /* save any remaining command line arguments (not options). */
+  if (optind < argc) {
+      while (optind < argc) {
+        char *arg = argv[optind++];
+        options::argc++;
+        options::argv.push_back(arg);
+      }
+  }
   exit (0);
 }
 
 
 
-static void help() {
+static void help() {    // prints help message to terminal
   printf ("Usage: %s [options]\n", PACKAGE_NAME);
   
   printf ("  -u, --phone                    specify username (for registration)\n");
