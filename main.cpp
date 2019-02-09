@@ -73,7 +73,7 @@ int main (int argc, char **argv) {
           if (optarg != NULL) {
             options::profile = optarg;
           } else {
-            options::profile = "default";
+            options::profile = (char*)"default";
           }
           break;
         case 'c':
