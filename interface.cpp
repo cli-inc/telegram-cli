@@ -10,7 +10,7 @@ bool quit = false;
 char *commands[] = {
     "help",
     "quit",
-    "depp",
+    "exit",
     NULL
 };
 
@@ -21,8 +21,8 @@ int terminal() {
         if(!line) break;  // ignore empty lines
         if(*line) add_history(line); // add line to history
         puts(line);
-        if (strcmp(line, "help") == 0)
-          puts("helping user...");
+        if ((strcmp(line, "quit") == 0) | (strcmp(line, "exit")))
+          return 0;
         free(line);
       }
       return 0;

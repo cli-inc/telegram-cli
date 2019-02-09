@@ -128,7 +128,11 @@ int main (int argc, char **argv) {
   #pragma endregion argument_processing
   #pragma region main
      if (!options::do_exec) { // only do when not called with -e
-       terminal();
+       int code = terminal();
+       if (code == 0) {
+         puts("Goodbye...");
+         exit(0);
+       }
      }
   #pragma endregion main
   exit (0);
