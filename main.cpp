@@ -6,6 +6,7 @@
 #include "config.h"
 #include "options.h"
 #include "interface.h"
+#include "colors.h"
 
 
 int main (int argc, char **argv) {
@@ -130,9 +131,11 @@ int main (int argc, char **argv) {
      if (!options::do_exec) { // only do when not called with -e
        int code = terminal();
        if (code == 0) {
-         puts("Goodbye...");
+         printf("%sGoodbye...%s\n", COLOR_GREEN, COLOR_NORMAL);
          exit(0);
        }
+       printf("%sdying...%s\n", COLOR_RED, COLOR_NORMAL);
+       exit(code);
      }
   #pragma endregion main
   exit (0);

@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.9)
 
+if(NOT CMAKE_BUILD_TYPE) 
+    set(CMAKE_BUILD_TYPE Debug)
+endif(NOT CMAKE_BUILD_TYPE)
+
 project(telegram-cli VERSION 0.1.0 LANGUAGES CXX)
 
 # create config.h
@@ -8,6 +12,7 @@ set(PACKAGE_NAME \"telegram-cli\")
 set(PACKAGE_VERSION $VERSION)
 set(PACKAGE_BUGREPORT \"https://github.com/cli-inc/telegram-cli/issues\")
 set(USE_JSON ON)
+set(DEBUG ON)
 configure_file(config.h.in config.h @ONLY)
 
 #find_package(Td 1.3.0 REQUIRED)    # required for tdlib
@@ -19,7 +24,8 @@ add_executable(telegram-cli
     main.h
     options.h
     interface.cpp
-    interface.h)
+    interface.h
+    colors.h)
 
 target_link_libraries(telegram-cli readline)
 #target_link_libraries(telegram-cli PRIVATE Td::TdStatic)
