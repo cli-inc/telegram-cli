@@ -26,7 +26,7 @@ main (int argc, char **argv)
              We distinguish them by their indices. */
           {"phone", required_argument,  0,  'u'},
           {"config",  required_argument,  0,  'c'},
-          {"profile", required_argument,  0,  'p'},
+          {"profile", optional_argument,  0,  'p'},
           {"exec",  required_argument,  0,  'e'},
           {"enable-msg-id", no_argument,  0,  'N'},
           {"disable-colors", no_argument, 0,  'C'},
@@ -43,7 +43,7 @@ main (int argc, char **argv)
       int option_index = 0;
 
       opterr = 0; // disable getopt error message
-      c = getopt_long_only (argc, argv, "hACNr:p:c:u:",    // all short flags together
+      c = getopt_long (argc, argv, ":hACNr:p:c:u:e:;",    // all short flags together
                        long_options, &option_index);
 
       /* Detect the end of the options. */
@@ -82,18 +82,25 @@ main (int argc, char **argv)
           printf ("option -f with value `%s'\n", optarg);
           break;
         case 'p':
+          if (optarg != NULL) {
+            // set profile = optarg
+          } else {
+            // set profile = "default"
+          }
           break;
         case 'c':
           break;
         case 'u':
           break;
+        case'e':
+          break;
 
         case '?': // invalid option
-          printf("%s: invalid option -- '%s'\n", PACKAGE_NAME, long_options[option_index].name);
+          printf("%s: invalid option -- '%c'\n", PACKAGE_NAME, optopt);
           help();
           break;
         case ':':   // missing option argument
-          printf("%s: missing argument -- '%s'", PACKAGE_NAME, long_options[option_index].name);
+          printf("%s: missing argument -- '%c'\n", PACKAGE_NAME, optopt);
           help();
           break;
         default:
@@ -127,7 +134,7 @@ static void help() {
   printf ("  -u, --phone                    specify username (for registration)\n");
   printf ("  --verbose                      set to verbose mode\n");
   printf ("  -N, --enable-msg-id            message num mode\n");
-  printf ("  -c --config                    config file name\n");
+  printf ("  -c, --config                    config file name\n");
   printf ("  -p, --profile                  use specified profile\n");
   printf ("  -C, --disable-colors           disabled colored output\n");
   printf ("  -A, --alert                    enable bell notifications\n");
