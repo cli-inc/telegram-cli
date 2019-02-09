@@ -43,7 +43,7 @@ main (int argc, char **argv)
       int option_index = 0;
 
       opterr = 0; // disable getopt error message
-      c = getopt_long (argc, argv, "hACNr:p:c:u:",    // all short flags together
+      c = getopt_long_only (argc, argv, "hACNr:p:c:u:",    // all short flags together
                        long_options, &option_index);
 
       /* Detect the end of the options. */
