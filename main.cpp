@@ -5,10 +5,11 @@
 #include "main.h"
 #include "config.h"
 #include "options.h"
-
+#include "interface.h"
 
 
 int main (int argc, char **argv) {
+  // process cmd arguments {
   while (1) {
       static struct option long_options[] =
         {
@@ -123,6 +124,12 @@ int main (int argc, char **argv) {
         options::argv.push_back(arg);
       }
   }
+
+  // } start program {
+     if (!options::do_exec) { // only do when not called with -e
+       terminal();
+     }
+  // }
   exit (0);
 }
 
