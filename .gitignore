@@ -123,3 +123,6 @@ fabric.properties
 
 # vs code
 build/
+
+# output binary
+telegram-cli
