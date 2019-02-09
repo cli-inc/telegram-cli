@@ -110,7 +110,7 @@ int main (int argc, char **argv) {
 
         // should not happen at all
         default:
-          printf("%s: error in execution: unable to process char %c\n", PACKAGE_NAME);
+          printf("%s: error in execution: unable to process char %c\n", PACKAGE_NAME, optopt);
           printf("Please open a issue at: %s\n", PACKAGE_BUGREPORT);
           abort ();
         }
