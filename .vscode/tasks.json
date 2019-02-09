@@ -17,7 +17,25 @@
             "label": "cmake",
             "type": "process",
             "command": "cmake",
-            "args": ["."]
+            "args": [
+                "."
+            ]
+        },
+        {
+            "label": "build-release",
+            "type": "process",
+            "command": "make",
+            "dependsOn": "cmake-release",
+            "group": "build"
+        },
+        {
+            "label": "cmake-release",
+            "type": "process",
+            "command": "cmake",
+            "args": [
+                "-DCMAKE_BUILD_TYPE=Release",
+                "."
+            ]
         }
     ]
 }
