@@ -11,7 +11,7 @@ Clone GitHub Repository
 
 Build
 
-    cmake
+    cmake .
     make
 
 Install
