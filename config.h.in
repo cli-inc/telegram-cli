@@ -1,0 +1,13 @@
+// header config file for cmake
+
+// enable json output
+#cmakedefine USE_JSON
+
+// define package name
+#cmakedefine PACKAGE_NAME @PACKAGE_NAME@
+
+// define package version
+#cmakedefine PACKAGE_VERSION @PROJECT_VERSION@
+
+// define url for bugreport
+#cmakedefine PACKAGE_BUGREPORT @PACKAGE_BUGREPORT@
