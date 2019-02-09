@@ -4,26 +4,22 @@
 
 #include "main.h"
 #include "config.h"
+#include "options.h"
 
 
 
 int
 main (int argc, char **argv)
 {
-  /* Flag set by ‘--verbose’. */
-  static int verbose_flag;
-  static int help_flag;
-  static bool show_help;
   int c;
 
   while (1)
     {
       static struct option long_options[] =
         {
-          /* These options set a flag. */
-          {"verbose", no_argument,       &verbose_flag, 1},
           /* These options don’t set a flag.
              We distinguish them by their indices. */
+          {"verbose", no_argument,       0, 'v'},
           {"phone", required_argument,  0,  'u'},
           {"config",  required_argument,  0,  'c'},
           {"profile", optional_argument,  0,  'p'},
@@ -43,7 +39,7 @@ main (int argc, char **argv)
       int option_index = 0;
 
       opterr = 0; // disable getopt error message
-      c = getopt_long (argc, argv, ":hACNr:p:c:u:e:;",    // all short flags together
+      c = getopt_long (argc, argv, ":hACNvr:p:c:u:e:;",    // all short flags together
                        long_options, &option_index);
 
       /* Detect the end of the options. */
@@ -63,37 +59,46 @@ main (int argc, char **argv)
           break;
 
         case 'h':
-        show_help = true;
+          help();
           break;
 
         case 'A':
-          puts ("option -b\n");
+          options::alert = true;
           break;
 
         case 'C':
-          printf ("option -c with value `%s'\n", optarg);
+          options::no_colors = true;
           break;
 
         case 'N':
-          printf ("option -d with value `%s'\n", optarg);
-          break;
-
-        case 'r':
-          printf ("option -f with value `%s'\n", optarg);
+          options::msg_id = true;
           break;
         case 'p':
           if (optarg != NULL) {
-            // set profile = optarg
+            options::profile = optarg;
           } else {
-            // set profile = "default"
+            options::profile = "default";
           }
           break;
         case 'c':
+          options::config = optarg;
           break;
         case 'u':
+          options::phone_number = optarg;
           break;
         case'e':
+          options::do_exec = true;
+          options::exec = optarg;
           break;
+        case 'v':
+          options::verbose = true;
+          break;
+
+        #ifdef USE_JSON
+        case 'j':
+          options::json = true;
+          break;
+        #endif
 
         case '?': // invalid option
           printf("%s: invalid option -- '%c'\n", PACKAGE_NAME, optopt);
@@ -108,12 +113,8 @@ main (int argc, char **argv)
           abort ();
         }
     }
-  if (verbose_flag)
+  if (options::verbose)
     puts ("verbose flag is set");
-
-  if (show_help)
-    help();
-
   /* Print any remaining command line arguments (not options). */
   if (optind < argc)
     {
@@ -132,7 +133,7 @@ static void help() {
   printf ("Usage: %s [options]\n", PACKAGE_NAME);
   
   printf ("  -u, --phone                    specify username (for registration)\n");
-  printf ("  --verbose                      set to verbose mode\n");
+  printf ("  -v, --verbose                      set to verbose mode\n");
   printf ("  -N, --enable-msg-id            message num mode\n");
   printf ("  -c, --config                    config file name\n");
   printf ("  -p, --profile                  use specified profile\n");

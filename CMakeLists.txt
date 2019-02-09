@@ -7,7 +7,7 @@ option(USE_JSON ON)
 set(PACKAGE_NAME \"telegram-cli\")
 set(PACKAGE_VERSION $VERSION)
 set(PACKAGE_BUGREPORT \"https://github.com/cli-inc/telegram-cli/issues\")
-set(USE_JSON OFF)
+set(USE_JSON ON)
 configure_file(config.h.in config.h @ONLY)
 
 #find_package(Td 1.3.0 REQUIRED)    # required for tdlib
@@ -15,6 +15,8 @@ configure_file(config.h.in config.h @ONLY)
 add_executable(telegram-cli
     config.h
     main.cpp
-    main.h)
+    main.h
+    options.h)
+
 #target_link_libraries(telegram-cli PRIVATE Td::TdStatic)
 set_property(TARGET telegram-cli PROPERTY CXX_STANDARD 14)
