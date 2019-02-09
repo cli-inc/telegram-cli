@@ -9,7 +9,7 @@
 
 
 int main (int argc, char **argv) {
-  // process cmd arguments {
+  #pragma region argument_processing
   while (1) {
       static struct option long_options[] =
         {
@@ -125,11 +125,12 @@ int main (int argc, char **argv) {
       }
   }
 
-  // } start program {
+  #pragma endregion argument_processing
+  #pragma region main
      if (!options::do_exec) { // only do when not called with -e
        terminal();
      }
-  // }
+  #pragma endregion main
   exit (0);
 }
 
