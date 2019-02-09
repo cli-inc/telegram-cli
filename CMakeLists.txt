@@ -13,7 +13,8 @@ configure_file(config.h.in config.h @ONLY)
 #find_package(Td 1.3.0 REQUIRED)    # required for tdlib
 
 add_executable(telegram-cli
+    config.h
     main.cpp
-    config.h)
+    main.h)
 #target_link_libraries(telegram-cli PRIVATE Td::TdStatic)
 set_property(TARGET telegram-cli PROPERTY CXX_STANDARD 14)
