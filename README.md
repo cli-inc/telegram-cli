@@ -1,6 +1,8 @@
 # telegram-cli
 Telegram c++ cli
 
+[![Build Status](https://travis-ci.com/cli-inc/telegram-cli.svg?branch=master)](https://travis-ci.com/cli-inc/telegram-cli) 
+
 # Build
 
 Clone GitHub Repository
