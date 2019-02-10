@@ -11,11 +11,6 @@ int terminal();
 
 namespace cmd_helpers
 {
-    /* current main command contains the current first command */
-    static char* main_command;
-
-    static char* arguments;
-
     /* execute_command is a helper to analyze a command string and execute the command */
     int execute_command(const char *command);
 

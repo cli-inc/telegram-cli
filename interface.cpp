@@ -41,20 +41,21 @@ int terminal() {
 }
 
 namespace cmd_helpers {
-    int execute_command(const char *command) {
+    int execute_command(const char *in) {
         if (options::verbose == false) {
             puts("non verbose");
         }
-        split_str(command, main_command, arguments);
+        char *command, *args;
+        split_str(in, command, args);
         if (options::verbose) {
-            printf("executing: %s\n", main_command);
+            printf("executing: %s\n", (char*)command);
         }
-        if ((strncmp(main_command, "quit", 4) == 0) || (strncmp(command, "exit", 4) == 0)) {
+        if ((strncmp(command, "quit", 4) == 0) || (strncmp(command, "exit", 4) == 0)) {
             quit = true;
             return 0;
-        } else if (strncmp(main_command, "help", 4) == 0) {
+        } else if (strncmp(command, "help", 4) == 0) {
             return cmd_help();
-        } else if (strncmp(main_command, "alias", 5) == 0) {
+        } else if (strncmp(command, "alias", 5) == 0) {
             return store_alias(arguments);
         }
         return 0;
@@ -80,9 +81,8 @@ namespace cmd_helpers {
         }
         args_string = in.substr(pos+1); // spliting spring
         main_command_string = in.substr(0,pos);
-        //printf("main_command_string: %s, pos: %d\n", main_command_string.c_str(), pos);
-        main = (char*)main_command_string.c_str();  // writing into variables
-        args = (char*)args_string.c_str();
+        main = strdup((char*)main_command_string.c_str());  // writing into variables
+        args = strdup((char*)args_string.c_str());
     }
 
     int cmd_help() {
