@@ -15,7 +15,7 @@ set(USE_JSON ON)
 set(DEBUG ON)
 configure_file(config.h.in config.h @ONLY)
 
-#find_package(Td 1.3.0 REQUIRED)    # required for tdlib
+add_subdirectory(td)
 find_library(readline telegram-cli)
 
 add_executable(telegram-cli
@@ -28,9 +28,12 @@ add_executable(telegram-cli
     interface.h
     colors.h)
 
-target_link_libraries(telegram-cli readline)
+target_link_libraries(telegram-cli PRIVATE
+                      Td::TdStatic
+                      readline)
 #target_link_libraries(telegram-cli PRIVATE Td::TdStatic)
-set_property(TARGET telegram-cli PROPERTY CXX_STANDARD 14)
+
+set_property(TARGET telegram-cli PROPERTY CXX_STANDARD 14) #set cpp standart
 
 
 #install argument
