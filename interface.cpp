@@ -42,13 +42,11 @@ int terminal() {
 
 namespace cmd_helpers {
     int execute_command(const char *in) {
-        if (options::verbose == false) {
-            puts("non verbose");
-        }
         char *command, *args;
+        args = (char*)" "; //so no error is thrown
         split_str(in, command, args);
         if (options::verbose) {
-            printf("executing: %s\n", (char*)command);
+            printf("executing: %s, %s\n", (char*)command, (char*)args);
         }
         if ((strncmp(command, "quit", 4) == 0) || (strncmp(command, "exit", 4) == 0)) {
             quit = true;
@@ -56,16 +54,27 @@ namespace cmd_helpers {
         } else if (strncmp(command, "help", 4) == 0) {
             return cmd_help();
         } else if (strncmp(command, "alias", 5) == 0) {
-            return store_alias(arguments);
+            return store_alias(args);
+        } else {
+                for (std::map<char*, char*>::iterator it = aliases.begin(); it != aliases.end(); it++) {
+                    if (strcmp(command, it->first) == 0) {
+                        std::string str(it->second);
+                        str += " " + std::string(args);
+                        return execute_command(strdup(str.c_str()));
+                    }
+                }
+                printf("Unknown command \"%s%s%s\", type help for help\n", COLOR_RED, command, COLOR_NORMAL);
         }
         return 0;
     }
 
     int store_alias(const char* command) {
-        puts ("storing alias");
-        aliases.insert(std::pair<char*, char*>("msg", "test"));
-        aliases.insert(std::pair<char*, char*>("test", "test"));
-        aliases.insert(std::pair<char*, char*>("hello", "test"));
+        if (options::verbose) {
+            printf ("storing alias: %s\n", command);
+        }
+        char *alias, *text;
+        split_str(command, alias, text);
+        aliases.insert(std::pair<char*, char*>(alias, text));
         return 0;
     }
 
