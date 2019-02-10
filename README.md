@@ -7,7 +7,7 @@ Telegram c++ cli
 
 Clone GitHub Repository
 
-     git clone --recursive https://github.com/vysheng/tg.git && cd tg
+     git clone --recursive https://github.com/cli-inc/telegram-cli.git && cd tg
 
 Build
 
