@@ -5,10 +5,12 @@
 #include "main.h"
 #include "config.h"
 #include "options.h"
-
+#include "interface.h"
+#include "colors.h"
 
 
 int main (int argc, char **argv) {
+  #pragma region argument_processing
   while (1) {
       static struct option long_options[] =
         {
@@ -109,7 +111,7 @@ int main (int argc, char **argv) {
 
         // should not happen at all
         default:
-          printf("%s: error in execution: unable to process char %c\n", PACKAGE_NAME);
+          printf("%s: error in execution: unable to process char %c\n", PACKAGE_NAME, optopt);
           printf("Please open a issue at: %s\n", PACKAGE_BUGREPORT);
           abort ();
         }
@@ -123,6 +125,19 @@ int main (int argc, char **argv) {
         options::argv.push_back(arg);
       }
   }
+
+  #pragma endregion argument_processing
+  #pragma region main
+     if (!options::do_exec) { // only do when not called with -e
+       int code = terminal();
+       if (code == 0) {
+         printf("%sGoodbye...%s\n", COLOR_GREEN, COLOR_NORMAL);
+         exit(0);
+       }
+       printf("%sdying...%s\n", COLOR_RED, COLOR_NORMAL);
+       exit(code);
+     }
+  #pragma endregion main
   exit (0);
 }
 

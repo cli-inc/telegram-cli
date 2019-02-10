@@ -3,6 +3,9 @@
 // enable json output
 #cmakedefine USE_JSON
 
+// enable debug mode
+#cmakedefine DEBUG
+
 // define package name
 #cmakedefine PACKAGE_NAME @PACKAGE_NAME@
 
