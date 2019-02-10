@@ -10,6 +10,8 @@ install:
 
 script:
   - git submodule update --init --recursive
-  - cmake .
+  - mkdir build
+  - cd build
+  - cmake ..
   - make
 
