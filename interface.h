@@ -14,7 +14,7 @@ namespace cmd_helpers
     /* current main command contains the current first command */
     static char* main_command;
 
-    static char* args;
+    static char* arguments;
 
     /* execute_command is a helper to analyze a command string and execute the command */
     int execute_command(const char *command);
@@ -26,7 +26,7 @@ namespace cmd_helpers
     int cmd_help();
 
     /* split_str splits a string at ' ' */
-    void split_str(const char* line);
+    void split_str(const char* line, char *&, char *&);
 
     /* aliases holds a list of all aliases */
     static std::map<char*, char*> aliases;
