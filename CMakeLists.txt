@@ -23,6 +23,7 @@ add_executable(telegram-cli
     main.cpp
     main.h
     options.h
+    options.cpp
     interface.cpp
     interface.h
     colors.h)
